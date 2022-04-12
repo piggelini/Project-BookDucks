@@ -12,19 +12,19 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "Hours": {
+    "hours": {
       "type": "decimal"
     },
-    "Rating": {
+    "rating": {
       "type": "integer",
       "max": 5,
       "min": 0,
       "default": 0
     },
-    "Cover": {
+    "cover": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -37,8 +37,13 @@
       "relation": "oneToMany",
       "target": "api::genre.genre"
     },
-    "Published": {
+    "published": {
       "type": "date"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

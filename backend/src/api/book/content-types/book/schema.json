@@ -12,24 +12,24 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string",
       "required": true
     },
-    "Author": {
+    "author": {
       "type": "string",
       "default": "Unknown"
     },
-    "Pages": {
+    "pages": {
       "type": "integer"
     },
-    "Rating": {
+    "rating": {
       "type": "integer",
       "default": 0,
       "max": 5,
       "min": 0
     },
-    "Cover": {
+    "cover": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -41,6 +41,11 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::genre.genre"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
