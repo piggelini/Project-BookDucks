@@ -9,7 +9,9 @@ const registerButton = document.getElementById("register");
 const loggedInUser = document.getElementById("logged-in-user");
 const mediaContainer = document.querySelector(".media-container");
 const homepageNav = document.getElementById("homepage-nav");
-
+const profilePage = document.querySelector(".profile-page")
+const loginForm = document.querySelector(".sign-in");
+const signUpForm = document.querySelector(".sign-up");
 
 //Hämta böckerna från backend
 //Hämta ljudböcker från backend
@@ -140,6 +142,12 @@ let login = async () => {
 
 if (sessionStorage.getItem("token")) {
     loggedInUser.innerText = sessionStorage.getItem("user");
+
+    if (!loginForm.classList.contains("hideSignIn")) {
+        console.log(loginForm.classList);
+        loginForm.classList.add("hideSignIn")
+        signUpForm.classList.add("hideSignIn")
+    }
 }
 
 
@@ -187,8 +195,26 @@ let showProfile = async () => {
     });
 
     users.data.forEach(user => {
-        if (user.username == sessionStorage.getItem("user"))
-            console.log(user.username);
+        if (user.username == sessionStorage.getItem("user")) {
+
+            let regDate = user.createdAt.slice(0, 10);
+
+            let profile = `
+        <h2>${user.username}<h2>
+        <div class="info-container">
+        <p>Email: ${user.email}</p>
+        <p>User id: ${user.id}</p>
+        <p>Registered: ${regDate}</p>
+        </div>
+        
+        `;
+
+            profilePage.innerHTML = profile;
+
+
+        }
+
+
     })
     console.log(users);
 

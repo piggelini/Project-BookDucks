@@ -54,4 +54,12 @@ article p {
   margin: 2px;
   font-size: 13px;
 }
+
+.hideSignUp {
+  display: none;
+}
+
+.hideSignIn {
+  display: none;
+}
 /*# sourceMappingURL=style.css.map */

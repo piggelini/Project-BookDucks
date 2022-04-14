@@ -26,10 +26,6 @@ article {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border: 1px solid lightgray;
 
-
-
-
-
     img {
         max-width: 150px;
     }
@@ -42,4 +38,12 @@ article {
         margin: 2px;
         font-size: 13px;
     }
+}
+
+.hideSignUp {
+    display: none;
+}
+
+.hideSignIn {
+    display: none;
 }
