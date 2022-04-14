@@ -11,10 +11,36 @@
 
 <body>
 
-    <header class="header"></header>
+
+    <header class="header">
+
+        <a href="#" id="logged-in-user"></a>
+
+        <form class="sign-in">
+            <h3>Sign in</h3>
+            <label for="user">Username</label>
+            <input type="text" id="user">
+            <label for="password">Password</label>
+            <input type="password" id="password">
+            <button id="login">Login</button>
+        </form>
+
+        <form class="sign-up">
+            <h3>Sign up</h3>
+            <label for="register-user">Username</label>
+            <input type="text" id="register-user">
+            <label for="register-email">Email</label>
+            <input type="text" id="register-email">
+            <label for="register-password">Password</label>
+            <input type="password" id="register-password">
+            <button id="register">Register</button>
+            <p></p>
+        </form>
+
+    </header>
 
     <main>
-        <div id="media-container"></div>
+        <div class="media-container"></div>
     </main>
 
     <footer class="footer"></footer>

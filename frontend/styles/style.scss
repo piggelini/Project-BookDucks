@@ -1,9 +1,17 @@
-#media-container {
+body {
+    background: rgb(239, 239, 239);
+}
+
+.media-container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }
+
+// .hideHomePage {
+//     display: none;
+// }
 
 
 article {
@@ -14,8 +22,9 @@ article {
     justify-content: flex-end;
     align-items: center;
     margin: 10px;
-    color: rgb(36, 36, 36);
+    color: rgb(46, 46, 46);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid lightgray;
 
 
 

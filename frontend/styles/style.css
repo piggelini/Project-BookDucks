@@ -1,4 +1,8 @@
-#media-container {
+body {
+  background: #efefef;
+}
+
+.media-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -29,8 +33,9 @@ article {
       -ms-flex-align: center;
           align-items: center;
   margin: 10px;
-  color: #242424;
+  color: #2e2e2e;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid lightgray;
 }
 
 article img {
