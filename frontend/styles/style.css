@@ -20,6 +20,10 @@ body {
   display: none;
 }
 
+.hideProfile {
+  display: none;
+}
+
 article {
   height: 420px;
   width: 200px;

@@ -179,11 +179,13 @@ let register = async () => {
 loggedInUser.addEventListener("click", (e) => {
 
     mediaContainer.classList.add("hideHomePage");
+    profilePage.classList.remove("hideProfile");
     showProfile();
 })
 
 homepageNav.addEventListener("click", (e) => {
     mediaContainer.classList.remove("hideHomePage");
+    profilePage.classList.add("hideProfile");
 })
 
 let showProfile = async () => {
