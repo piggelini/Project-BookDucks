@@ -8,6 +8,7 @@ const registerPassword = document.querySelector("#register-password");
 const registerButton = document.getElementById("register");
 const loggedInUser = document.getElementById("logged-in-user");
 const mediaContainer = document.querySelector(".media-container");
+const homepageNav = document.getElementById("homepage-nav");
 
 
 //Hämta böckerna från backend
@@ -36,7 +37,6 @@ async function renderData(books, audiobooks) {
 
 
     books.data.data.forEach((book) => {
-        console.log(book);
         let bookTitle = document.createElement("h4");
         let bookAuthor = document.createElement("p");
         let bookPages = document.createElement("p");
@@ -75,7 +75,6 @@ async function renderData(books, audiobooks) {
     });
 
     audiobooks.data.data.forEach((audiobook) => {
-        console.log(audiobook);
 
         let audiobookTitle = document.createElement("h4");
         let audiobookPublished = document.createElement("p");
@@ -135,7 +134,7 @@ let login = async () => {
 
     let token = data.jwt;
     sessionStorage.setItem("token", token);
-    sessionStorage.setItem("user", user.value);
+    sessionStorage.setItem("user", user.value, "blue", "horse");
     loggedInUser.innerText = user.value;
 }
 
@@ -172,4 +171,25 @@ let register = async () => {
 loggedInUser.addEventListener("click", (e) => {
 
     mediaContainer.classList.add("hideHomePage");
+    showProfile();
 })
+
+homepageNav.addEventListener("click", (e) => {
+    mediaContainer.classList.remove("hideHomePage");
+})
+
+let showProfile = async () => {
+    let users = await axios.get('http://localhost:1337/api/users?populate=*', {
+
+        // headers: {
+        //     Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        // }
+    });
+
+    users.data.forEach(user => {
+        if (user.username == sessionStorage.getItem("user"))
+            console.log(user.username);
+    })
+    console.log(users);
+
+}

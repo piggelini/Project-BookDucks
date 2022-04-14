@@ -16,6 +16,10 @@ body {
           justify-content: center;
 }
 
+.hideHomePage {
+  display: none;
+}
+
 article {
   height: 420px;
   width: 200px;
