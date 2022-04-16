@@ -12,6 +12,9 @@ const homepageNav = document.getElementById("homepage-nav");
 const profilePage = document.querySelector(".profile-page")
 const loginForm = document.querySelector(".sign-in");
 const signUpForm = document.querySelector(".sign-up");
+const profileItemContainer = document.querySelector(".users-items");
+const profileInfo = document.querySelector(".info-container");
+let articleArray = [];
 
 //Hämta böckerna från backend
 //Hämta ljudböcker från backend
@@ -31,7 +34,6 @@ async function getMedia() {
     });
 
     renderData(books, audiobooks)
-
 }
 
 // 
@@ -50,6 +52,9 @@ async function renderData(books, audiobooks) {
         let bookCover = document.createElement("img");
         let article = document.createElement("article");
 
+        article.classList.add(book.attributes.users_permissions_user.data.attributes.username + "-" + book.attributes.users_permissions_user.data.id)
+        console.log(article.classList);
+
         bookTitle.innerText = book.attributes.title;
         bookAuthor.innerText = book.attributes.author;
         bookPages.innerText = "Number of pages: " + book.attributes.pages;
@@ -61,7 +66,9 @@ async function renderData(books, audiobooks) {
 
         book.attributes.genres.data.forEach(genre => {
             bookGenres.innerText += genre.attributes.name + " ";
+
         })
+
 
         mediaContainer.appendChild(article);
         article.appendChild(bookCover);
@@ -73,6 +80,13 @@ async function renderData(books, audiobooks) {
         bookInfo.appendChild(bookRating);
         bookInfo.appendChild(userName);
         bookInfo.appendChild(userEmail);
+
+        articleArray.push(article);
+
+        // if (loggedInUser.innerText == book.attributes.users_permissions_user.data.attributes.username) {
+        //     profileItemContainer.appendChild(article);
+
+        // }
 
     });
 
@@ -136,7 +150,8 @@ let login = async () => {
 
     let token = data.jwt;
     sessionStorage.setItem("token", token);
-    sessionStorage.setItem("user", user.value, "blue", "horse");
+    sessionStorage.setItem("user", user.value);
+
     loggedInUser.innerText = user.value;
 }
 
@@ -180,44 +195,64 @@ loggedInUser.addEventListener("click", (e) => {
 
     mediaContainer.classList.add("hideHomePage");
     profilePage.classList.remove("hideProfile");
-    showProfile();
+    getUserId();
 })
+
+let getUserId = () => {
+    let user = "";
+    articleArray.forEach(article => {
+
+        if (article.classList[0].includes(loggedInUser.innerText)) {
+
+            user = article.classList[0];
+            profileItemContainer.appendChild(article);
+
+        }
+    })
+
+    let id = user.replace(loggedInUser.innerText + "-", "");
+    console.log(id);
+    getUser(id);
+}
 
 homepageNav.addEventListener("click", (e) => {
     mediaContainer.classList.remove("hideHomePage");
     profilePage.classList.add("hideProfile");
 })
 
-let showProfile = async () => {
-    let users = await axios.get('http://localhost:1337/api/users?populate=*', {
+let getUser = async (id) => {
+    let user = await axios.get(`http://localhost:1337/api/users/${id}`, {
 
-        // headers: {
-        //     Authorization: `Bearer ${sessionStorage.getItem("token")}`
-        // }
+        //     headers: {
+        //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        //     }
     });
 
-    users.data.forEach(user => {
-        if (user.username == sessionStorage.getItem("user")) {
 
-            let regDate = user.createdAt.slice(0, 10);
+    showProfile(user);
 
-            let profile = `
-        <h2>${user.username}<h2>
-        <div class="info-container">
-        <p>Email: ${user.email}</p>
-        <p>User id: ${user.id}</p>
+}
+
+let showProfile = async (user) => {
+
+
+    let regDate = user.data.createdAt.slice(0, 10);
+
+    let profile = `
+        <h2>${user.data.username}<h2>
+        
+        <p>Email: ${user.data.email}</p>
+        <p>User id: ${user.data.id}</p>
         <p>Registered: ${regDate}</p>
-        </div>
+        
+        <h2>Your books</h2>
+
         
         `;
 
-            profilePage.innerHTML = profile;
+    profileInfo.innerHTML = profile;
 
 
-        }
 
-
-    })
-    console.log(users);
 
 }
