@@ -1,5 +1,39 @@
 body {
-  background: #efefef;
+  margin: 0;
+  background: #faf5e4;
+}
+
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  background: #125b50;
+  margin-bottom: 80px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #2e2e2e;
+  font-weight: bold;
+  height: 600px;
+}
+
+.header h1 {
+  margin: 20px;
+}
+
+.header nav {
+  justify-self: flex-end;
+  margin: 5px;
+}
+
+.header nav a {
+  margin: 20px;
+  text-decoration: none;
+  color: #2e2e2e;
 }
 
 .media-container {

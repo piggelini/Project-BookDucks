@@ -36,6 +36,7 @@ async function getMedia() {
     });
 
     renderData(books, audiobooks)
+
 }
 
 // 
@@ -195,6 +196,7 @@ registerButton.addEventListener("click", (e) => {
     register();
 })
 
+
 let register = async () => {
 
     let response = await axios.post("http://localhost:1337/api/auth/local/register",
@@ -221,6 +223,7 @@ userProfile.addEventListener("click", (e) => {
     profilePage.classList.remove("hideProfile");
     getUserId();
 })
+
 
 let getUserId = () => {
     let user = "";

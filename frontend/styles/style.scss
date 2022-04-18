@@ -1,5 +1,38 @@
 body {
-    background: rgb(239, 239, 239);
+    margin: 0;
+    background: rgb(250, 245, 228)
+}
+
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: rgb(18, 91, 80);
+    margin-bottom: 80px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(46, 46, 46);
+    font-weight: bold;
+    height: 600px;
+
+    h1 {
+        margin: 20px;
+    }
+
+
+    nav {
+        justify-self: flex-end;
+        margin: 5px;
+
+        a {
+            margin: 20px;
+            text-decoration: none;
+            color: rgb(46, 46, 46);
+
+        }
+    }
+
+
 }
 
 .media-container {
