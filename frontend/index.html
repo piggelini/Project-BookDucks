@@ -57,6 +57,7 @@
                         <label for="register-password">Password</label>
                         <input type="password" id="register-password">
                         <button id="register">Register</button>
+                        <span class="error-reg complete-reg"></span>
                         <p></p>
                     </form>
                 </div>
@@ -67,25 +68,20 @@
         </div>
     </div>
 
-
+    <!-- ------------HEADER------------------ -->
     <header class="header">
 
         <h1>BookDucks</h1>
 
-        <nav class="header-nav">
+        <nav class="header-nav nav justify-content-center">
             <a href="#" id="homepage-nav">Home</a>
+            <!-- link trigger modal -->
+            <a class="sign-in-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                Sign in
+            </a>
             <a href="#" id="logged-in-user"></a>
+            <a class="logout" href="#"></a>
         </nav>
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-            Sign in
-        </button>
-
-
-
-
-        <button class="logout-button">Log out</button>
 
     </header>
 

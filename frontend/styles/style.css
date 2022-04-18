@@ -59,11 +59,11 @@ article p {
   font-size: 13px;
 }
 
-.hideSignUp {
+.hideSignIn {
   display: none;
 }
 
-.hideSignIn {
+.hide-user-link {
   display: none;
 }
 /*# sourceMappingURL=style.css.map */

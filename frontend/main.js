@@ -6,7 +6,7 @@ const registerUser = document.querySelector("#register-user");
 const registerEmail = document.querySelector("#register-email");
 const registerPassword = document.querySelector("#register-password");
 const registerButton = document.getElementById("register");
-const loggedInUser = document.getElementById("logged-in-user");
+const userProfile = document.getElementById("logged-in-user");
 const mediaContainer = document.querySelector(".media-container");
 const homepageNav = document.getElementById("homepage-nav");
 const profilePage = document.querySelector(".profile-page")
@@ -14,7 +14,9 @@ const loginForm = document.querySelector(".sign-in");
 const signUpForm = document.querySelector(".sign-up");
 const profileItemContainer = document.querySelector(".users-items");
 const profileInfo = document.querySelector(".info-container");
+const signInNavLink = document.querySelector(".sign-in-link")
 let articleArray = [];
+const logoutButton = document.querySelector(".logout");
 
 //Hämta böckerna från backend
 //Hämta ljudböcker från backend
@@ -83,11 +85,6 @@ async function renderData(books, audiobooks) {
 
         articleArray.push(article);
 
-        // if (loggedInUser.innerText == book.attributes.users_permissions_user.data.attributes.username) {
-        //     profileItemContainer.appendChild(article);
-
-        // }
-
     });
 
     audiobooks.data.data.forEach((audiobook) => {
@@ -102,6 +99,8 @@ async function renderData(books, audiobooks) {
         let audiobookInfo = document.createElement("section");
         let audiobookCover = document.createElement("img");
         let article = document.createElement("article");
+
+        article.classList.add(audiobook.attributes.users_permissions_user.data.attributes.username + "-" + audiobook.attributes.users_permissions_user.data.id)
 
         audiobookTitle.innerText = audiobook.attributes.title;
         audiobookPublished.innerText = "Published: " + audiobook.attributes.published;
@@ -128,12 +127,15 @@ async function renderData(books, audiobooks) {
         audiobookInfo.appendChild(userName);
         audiobookInfo.appendChild(userEmail);
 
+        let savedArticle = article;
+        articleArray.push(savedArticle);
 
     });
 
 }
 
 getMedia();
+checkIfLoggedIn();
 
 
 loginButton.addEventListener("click", (e) => {
@@ -152,18 +154,39 @@ let login = async () => {
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("user", user.value);
 
-    loggedInUser.innerText = user.value;
+    userProfile.innerText = user.value;
+
+    if (sessionStorage.getItem("token")) {
+        userProfile.classList.remove("hide-user-link");
+        userProfile.innerText = sessionStorage.getItem("user");
+        logoutButton.innerText = "Logout";
+
+        if (!signInNavLink.classList.contains("hideSignIn")) {
+            signInNavLink.classList.add("hideSignIn");
+        }
+    }
+
 }
 
-if (sessionStorage.getItem("token")) {
-    loggedInUser.innerText = sessionStorage.getItem("user");
 
-    if (!loginForm.classList.contains("hideSignIn")) {
-        console.log(loginForm.classList);
-        loginForm.classList.add("hideSignIn")
-        signUpForm.classList.add("hideSignIn")
+function checkIfLoggedIn() {
+    if (sessionStorage.getItem("token")) {
+        userProfile.classList.remove("hide-user-link");
+        userProfile.innerText = sessionStorage.getItem("user");
+        logoutButton.innerText = "Logout";
+
+        if (!signInNavLink.classList.contains("hideSignIn")) {
+            signInNavLink.classList.add("hideSignIn");
+        }
+
+    } else {
+        userProfile.classList.add("hide-user-link");
+        logoutButton.innerText = "";
     }
 }
+
+
+
 
 
 
@@ -187,11 +210,12 @@ let register = async () => {
     // console.log("Got the JWT!", token);
 
     // sessionStorage.setItem("token", token);
-    loggedInUser.innerText = "Welcome " + registerUser.value + ". You can now sign in!";
+    let completedReg = document.querySelector(".complete-reg");
+    completedReg.innerText = "Welcome " + registerUser.value + ". You can now sign in!";
 
 }
 
-loggedInUser.addEventListener("click", (e) => {
+userProfile.addEventListener("click", (e) => {
 
     mediaContainer.classList.add("hideHomePage");
     profilePage.classList.remove("hideProfile");
@@ -200,20 +224,23 @@ loggedInUser.addEventListener("click", (e) => {
 
 let getUserId = () => {
     let user = "";
-    articleArray.forEach(article => {
+    articleArray.forEach(art => {
 
-        if (article.classList[0].includes(loggedInUser.innerText)) {
+        if (art.classList[0].includes(userProfile.innerText)) {
 
-            user = article.classList[0];
-            profileItemContainer.appendChild(article);
+            user = art.classList[0];
+            profileItemContainer.appendChild(art);
 
         }
     })
 
-    let id = user.replace(loggedInUser.innerText + "-", "");
+    let id = user.replace(userProfile.innerText + "-", "");
     console.log(id);
     getUser(id);
 }
+
+
+
 
 homepageNav.addEventListener("click", (e) => {
     mediaContainer.classList.remove("hideHomePage");
@@ -244,8 +271,7 @@ let showProfile = async (user) => {
         <p>Email: ${user.data.email}</p>
         <p>User id: ${user.data.id}</p>
         <p>Registered: ${regDate}</p>
-        
-        <h2>Your books</h2>
+    
 
         
         `;
@@ -256,3 +282,9 @@ let showProfile = async (user) => {
 
 
 }
+
+logoutButton.addEventListener("click", (e) => {
+    sessionStorage.clear();
+    userProfile.classList.add("hide-user-link");
+    logoutButton.innerText = "";
+});
