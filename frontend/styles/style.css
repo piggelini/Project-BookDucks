@@ -141,9 +141,9 @@ article {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -193,6 +193,7 @@ article p {
           flex-direction: column;
   margin: 30px;
   background: #125b50;
+  color: #faf5e4;
   border-radius: 7px;
   width: 50vw;
 }
@@ -208,6 +209,15 @@ article p {
   margin-bottom: 20px;
 }
 
+.info-container button {
+  font-size: 16px;
+  margin: 20px;
+  height: 30px;
+  background-color: #ff6363;
+  border: 0px;
+  border-radius: 3px;
+}
+
 .users-items {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -217,5 +227,64 @@ article p {
           justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+}
+
+.modal-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.sign-in,
+.sign-up {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 60%;
+}
+
+.sign-in input,
+.sign-up input {
+  margin: 10px;
+  margin-top: 0px;
+}
+
+.sign-in label,
+.sign-up label {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.sign-in button,
+.sign-up button {
+  margin: 10px;
+  background-color: #ff6363;
+  border-radius: 3px;
+  border: 0px;
+  height: 30px;
+}
+
+.modal-content div {
+  background-color: #faf5e4;
+}
+
+.upload-page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.hide-upload-page {
+  display: none;
 }
 /*# sourceMappingURL=style.css.map */

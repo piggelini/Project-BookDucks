@@ -185,6 +185,7 @@ function checkIfLoggedIn() {
 
     } else {
         userProfile.classList.add("hide-user-link");
+        signInNavLink.classList.remove("hideSignIn");
         logoutButton.innerText = "";
     }
 }
@@ -226,11 +227,11 @@ userProfile.addEventListener("click", (e) => {
     profilePage.classList.remove("hideProfile");
     header.classList.add("short-header");
     headerBottom.classList.add("hide-bottom-header");
-    getUserId();
+    showArticlesInProfile();
 })
 
 
-let getUserId = () => {
+let showArticlesInProfile = () => {
     let user = "";
     articleArray.forEach(art => {
 
@@ -242,9 +243,7 @@ let getUserId = () => {
         }
     })
 
-    let id = user.replace(userProfile.innerText + "-", "");
-    console.log(id);
-    getUser(id);
+    getUser();
 }
 
 
@@ -257,8 +256,8 @@ homepageNav.addEventListener("click", (e) => {
     headerBottom.classList.remove("hide-bottom-header");
 })
 
-let getUser = async (id) => {
-    let user = await axios.get(`http://localhost:1337/api/users/${id}`, {
+let getUser = async () => {
+    let users = await axios.get(`http://localhost:1337/api/users`, {
 
         //     headers: {
         //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -266,31 +265,141 @@ let getUser = async (id) => {
     });
 
 
-    showProfile(user);
+    showProfile(users);
 
 }
 
-let showProfile = async (user) => {
+let showProfile = async (users) => {
+    console.log(users);
 
+    users.data.forEach(user => {
+        if (user.username == userProfile.innerText) {
 
-    let regDate = user.data.createdAt.slice(0, 10);
+            let regDate = user.createdAt.slice(0, 10);
 
-    let profile = `
-        <h2>${user.data.username}<h2>
+            let profile = `
+                <h2>${user.username}<h2>
+                
+                <p>Email: ${user.email}</p>
+                <p>User id: ${user.id}</p>
+                <p>Registered: ${regDate}</p>
         
-        <p>Email: ${user.data.email}</p>
-        <p>User id: ${user.data.id}</p>
-        <p>Registered: ${regDate}</p>
-
-        <button>Add books to your shelf</button>
-    
-
+                <button class="add-book-button">Add books to your shelf</button>
+            
         
-        `;
+                
+                `;
 
-    profileInfo.innerHTML = profile;
+            profileInfo.innerHTML = profile;
 
 
+
+
+
+            //------------------- UPLOAD PAGE -----------------------------------
+            const uploadBookButton = document.querySelector(".add-book-button");
+            const uploadPage = document.querySelector(".upload-page");
+
+
+
+            uploadBookButton.addEventListener("click", (e) => {
+                profilePage.classList.add("hideProfile");
+                uploadPage.classList.remove("hide-upload-page");
+
+                let twoButtons = `
+                    <button class="uploadBookBtn">Upload book</button>
+                    <button class="uploadAudiobookBtn">Upload audiobook</button>
+                `;
+
+                uploadPage.innerHTML = twoButtons;
+
+
+                bookButton = document.querySelector(".uploadBookBtn");
+                audiobookButton = document.querySelector(".uploadAudiobookBtn");
+
+                bookButton.addEventListener("click", (e) => {
+
+                    let uploadForm = `
+                    <h2>Upload book</h2>
+                <label for="title">Title</label>
+                <input type="text" id="title">
+
+                <label for="author">Author</label>
+                <input type="text" id="author">
+
+                <label for="pages">Pages</label>
+                <input type="number" id="pages">
+
+                <label for="rating">Rating (1-5)</label>
+                <input type="number" id="rating" min="1" max="5">
+
+                <h3>Choose genre or genres</h3>
+                <label for="horror">Horror</label>
+                <input type="checkbox" name="horror" value = "1" />
+                
+                <label for="sciencef">Science Fiction</label>
+                <input type="checkbox" name="sciencef" value = "2" />
+        
+                <label for="comedy">Comedy</label>
+                <input type="checkbox" name="comedy" value = "3" />
+
+                <label for="action">Action and Adventure</label>
+                <input type="checkbox" name="action" value = "4" />
+
+                <label for="fantasy">Fantasy</label>
+                <input type="checkbox" name="fantasy" value = "6" />
+
+                <label for="crime">Crime</label>
+                <input type="checkbox" name="crime" value = "5" />
+
+                <label for="childrens">Childrens</label>
+                <input type="checkbox" name="childrens" value = "8" />
+
+                <label for="classics">Classics</label>
+                <input type="checkbox" name="classics" value = "9" />
+
+                <label for="romance">Romance</label>
+                <input type="checkbox" name="romance" value = "10" />
+
+                <label for="mystery">Mystery</label>
+                <input type="checkbox" name="mystery" value = "11" />
+
+                <label for="cover">Upload image</label>
+                <input type="file" id="cover">
+
+                <button id="uploadButton">Add book</button>`
+
+                    uploadPage.innerHTML = uploadForm;
+
+                })
+
+                audiobookButton.addEventListener("click", (e) => {
+
+                    let uploadForm = `
+                    <h2>Upload audiobook</h2>
+                <label for="name"></label>
+                <input type="text" id="name">
+                <select name="candies" id="candies">
+                    <option value="1">Candy Cane</option>
+                    <option value="2">Muffins</option>
+                    <option value="3">Ice cream</option>
+                </select>
+                <input type="file" id="portraitImg">
+                <button id="adoptPet" onClick="adoptPet()">Adopt</button>`
+
+                    uploadPage.innerHTML = uploadForm;
+
+                })
+
+
+
+            })
+
+        }
+
+
+
+    })
 
 
 }
@@ -299,9 +408,13 @@ logoutButton.addEventListener("click", (e) => {
     sessionStorage.clear();
     userProfile.classList.add("hide-user-link");
     logoutButton.innerText = "";
+    signInNavLink.classList.remove("hideSignIn");
 });
 
 shelfButton.addEventListener("click", (e) => {
 
     window.scrollTo(0, 600);
 })
+
+
+
