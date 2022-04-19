@@ -14,7 +14,6 @@ main {
 
 .header {
   background: #125b50;
-  margin-bottom: 80px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: #faf5e4;
   font-weight: bold;
@@ -191,7 +190,6 @@ article p {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin: 30px;
   background: #125b50;
   color: #faf5e4;
   border-radius: 7px;
@@ -279,6 +277,10 @@ article p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;

@@ -12,10 +12,9 @@ const homepageNav = document.getElementById("homepage-nav");
 const profilePage = document.querySelector(".profile-page")
 const loginForm = document.querySelector(".sign-in");
 const signUpForm = document.querySelector(".sign-up");
-const profileItemContainer = document.querySelector(".users-items");
+const profileBookContainer = document.querySelector(".users-items");
 const profileInfo = document.querySelector(".info-container");
 const signInNavLink = document.querySelector(".sign-in-link");
-let articleArray = [];
 const logoutButton = document.querySelector(".logout");
 const header = document.querySelector(".header");
 const headerBottom = document.querySelector(".bottom-header");
@@ -58,8 +57,6 @@ async function renderData(books, audiobooks) {
         let bookCover = document.createElement("img");
         let article = document.createElement("article");
 
-        article.classList.add(book.attributes.users_permissions_user.data.attributes.username + "-" + book.attributes.users_permissions_user.data.id)
-        console.log(article.classList);
 
         bookTitle.innerText = book.attributes.title;
         bookAuthor.innerText = book.attributes.author;
@@ -87,7 +84,6 @@ async function renderData(books, audiobooks) {
         bookInfo.appendChild(userName);
         bookInfo.appendChild(userEmail);
 
-        articleArray.push(article);
 
     });
 
@@ -104,7 +100,6 @@ async function renderData(books, audiobooks) {
         let audiobookCover = document.createElement("img");
         let article = document.createElement("article");
 
-        article.classList.add(audiobook.attributes.users_permissions_user.data.attributes.username + "-" + audiobook.attributes.users_permissions_user.data.id)
 
         audiobookTitle.innerText = audiobook.attributes.title;
         audiobookPublished.innerText = "Published: " + audiobook.attributes.published;
@@ -131,9 +126,6 @@ async function renderData(books, audiobooks) {
         audiobookInfo.appendChild(userName);
         audiobookInfo.appendChild(userEmail);
 
-        let savedArticle = article;
-        articleArray.push(savedArticle);
-
     });
 
 }
@@ -154,9 +146,11 @@ let login = async () => {
             password: password.value
         });
 
+    console.log(data.user.id);
     let token = data.jwt;
     sessionStorage.setItem("token", token);
-    sessionStorage.setItem("user", user.value);
+    sessionStorage.setItem("user", data.user.username);
+    sessionStorage.setItem("userId", data.user.id);
 
     userProfile.innerText = user.value;
 
@@ -227,21 +221,35 @@ userProfile.addEventListener("click", (e) => {
     profilePage.classList.remove("hideProfile");
     header.classList.add("short-header");
     headerBottom.classList.add("hide-bottom-header");
-    showArticlesInProfile();
+    getUsersBooks();
 })
 
 
-let showArticlesInProfile = () => {
-    let user = "";
-    articleArray.forEach(art => {
+let usersBooks;
+let usersAudiobooks;
 
-        if (art.classList[0].includes(userProfile.innerText)) {
+let getUsersBooks = async () => {
 
-            user = art.classList[0];
-            profileItemContainer.appendChild(art);
+    usersBooks = [];
+    usersAudiobooks = [];
 
+    let books = await axios.get('http://localhost:1337/api/books?populate=*', {
+
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
         }
-    })
+    });
+
+
+    let audiobooks = await axios.get('http://localhost:1337/api/audiobooks?populate=*', {
+
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        }
+    });
+
+    usersBooks = books.data.data.filter(book => book.attributes.users_permissions_user.data.id == sessionStorage.getItem("userId"));
+    usersAudiobooks = audiobooks.data.data.filter(abook => abook.attributes.users_permissions_user.data.id == sessionStorage.getItem("userId"));
 
     getUser();
 }
@@ -257,31 +265,29 @@ homepageNav.addEventListener("click", (e) => {
 })
 
 let getUser = async () => {
-    let users = await axios.get(`http://localhost:1337/api/users`, {
+    let user = await axios.get(`http://localhost:1337/api/users/${sessionStorage.getItem("userId")}`, {
 
-        //     headers: {
-        //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
-        //     }
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        }
     });
 
 
-    showProfile(users);
+    showProfile(user);
 
 }
 
-let showProfile = async (users) => {
-    console.log(users);
 
-    users.data.forEach(user => {
-        if (user.username == userProfile.innerText) {
+let showProfile = async (user) => {
+    console.log(user);
 
-            let regDate = user.createdAt.slice(0, 10);
+    let regDate = user.data.createdAt.slice(0, 10);
 
-            let profile = `
-                <h2>${user.username}<h2>
+    let profile = `
+                <h2>${user.data.username}<h2>
                 
-                <p>Email: ${user.email}</p>
-                <p>User id: ${user.id}</p>
+                <p>Email: ${user.data.email}</p>
+                <p>User id: ${user.data.id}</p>
                 <p>Registered: ${regDate}</p>
         
                 <button class="add-book-button">Add books to your shelf</button>
@@ -290,36 +296,36 @@ let showProfile = async (users) => {
                 
                 `;
 
-            profileInfo.innerHTML = profile;
+    profileInfo.innerHTML = profile;
 
 
 
 
 
-            //------------------- UPLOAD PAGE -----------------------------------
-            const uploadBookButton = document.querySelector(".add-book-button");
-            const uploadPage = document.querySelector(".upload-page");
+    //------------------- UPLOAD PAGE -----------------------------------
+    const uploadBookButton = document.querySelector(".add-book-button");
+    const uploadPage = document.querySelector(".upload-page");
 
 
 
-            uploadBookButton.addEventListener("click", (e) => {
-                profilePage.classList.add("hideProfile");
-                uploadPage.classList.remove("hide-upload-page");
+    uploadBookButton.addEventListener("click", (e) => {
+        profilePage.classList.add("hideProfile");
+        uploadPage.classList.remove("hide-upload-page");
 
-                let twoButtons = `
+        let twoButtons = `
                     <button class="uploadBookBtn">Upload book</button>
                     <button class="uploadAudiobookBtn">Upload audiobook</button>
                 `;
 
-                uploadPage.innerHTML = twoButtons;
+        uploadPage.innerHTML = twoButtons;
 
 
-                bookButton = document.querySelector(".uploadBookBtn");
-                audiobookButton = document.querySelector(".uploadAudiobookBtn");
+        bookButton = document.querySelector(".uploadBookBtn");
+        audiobookButton = document.querySelector(".uploadAudiobookBtn");
 
-                bookButton.addEventListener("click", (e) => {
+        bookButton.addEventListener("click", (e) => {
 
-                    let uploadForm = `
+            let uploadForm = `
                     <h2>Upload book</h2>
                 <label for="title">Title</label>
                 <input type="text" id="title">
@@ -367,42 +373,76 @@ let showProfile = async (users) => {
                 <label for="cover">Upload image</label>
                 <input type="file" id="cover">
 
-                <button id="uploadButton">Add book</button>`
+                <button id="uploadButton" onClick= "addBook()" >Add book</button>`
 
-                    uploadPage.innerHTML = uploadForm;
-
-                })
-
-                audiobookButton.addEventListener("click", (e) => {
-
-                    let uploadForm = `
-                    <h2>Upload audiobook</h2>
-                <label for="name"></label>
-                <input type="text" id="name">
-                <select name="candies" id="candies">
-                    <option value="1">Candy Cane</option>
-                    <option value="2">Muffins</option>
-                    <option value="3">Ice cream</option>
-                </select>
-                <input type="file" id="portraitImg">
-                <button id="adoptPet" onClick="adoptPet()">Adopt</button>`
-
-                    uploadPage.innerHTML = uploadForm;
-
-                })
+            uploadPage.innerHTML = uploadForm;
 
 
 
-            })
+        })
 
-        }
+        audiobookButton.addEventListener("click", (e) => {
 
+            let uploadForm = `
+                <h2>Upload book</h2>
+            <label for="title">Title</label>
+            <input type="text" id="title">
 
+            <label for="hours">Hours</label>
+            <input type="text" id="hours">
+
+            <label for="published">Published</label>
+            <input type="date" id="published">
+
+            <label for="rating">Rating (1-5)</label>
+            <input type="number" id="rating" min="1" max="5">
+
+            <h3>Choose genre or genres</h3>
+            <label for="horror">Horror</label>
+            <input type="checkbox" name="horror" value = "1" />
+            
+            <label for="sciencef">Science Fiction</label>
+            <input type="checkbox" name="sciencef" value = "2" />
+    
+            <label for="comedy">Comedy</label>
+            <input type="checkbox" name="comedy" value = "3" />
+
+            <label for="action">Action and Adventure</label>
+            <input type="checkbox" name="action" value = "4" />
+
+            <label for="fantasy">Fantasy</label>
+            <input type="checkbox" name="fantasy" value = "6" />
+
+            <label for="crime">Crime</label>
+            <input type="checkbox" name="crime" value = "5" />
+
+            <label for="childrens">Childrens</label>
+            <input type="checkbox" name="childrens" value = "8" />
+
+            <label for="classics">Classics</label>
+            <input type="checkbox" name="classics" value = "9" />
+
+            <label for="romance">Romance</label>
+            <input type="checkbox" name="romance" value = "10" />
+
+            <label for="mystery">Mystery</label>
+            <input type="checkbox" name="mystery" value = "11" />
+
+            <label for="cover">Upload image</label>
+            <input type="file" id="cover">
+
+            <button id="uploadButton" onClick="addAudiobook()" >Add audiobook</button>`
+            uploadPage.innerHTML = uploadForm;
+
+        })
 
     })
 
-
 }
+
+
+
+
 
 logoutButton.addEventListener("click", (e) => {
     sessionStorage.clear();
@@ -411,10 +451,114 @@ logoutButton.addEventListener("click", (e) => {
     signInNavLink.classList.remove("hideSignIn");
 });
 
+
+
 shelfButton.addEventListener("click", (e) => {
 
     window.scrollTo(0, 600);
 })
+
+
+
+
+let addBook = async () => {
+    let title = document.querySelector("#title").value;
+    let author = document.querySelector("#author").value;
+    let pages = document.querySelector("#pages").value;
+    let rating = document.querySelector("#rating").value;
+    let genres = [];
+    let checkboxes = document.querySelectorAll(("[type='checkbox']"));
+    let userId = sessionStorage.getItem("userId");
+
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            genres.push(checkbox.value);
+        }
+
+    })
+
+
+    let img = document.querySelector("#cover").files;
+    let imgData = new FormData();
+    imgData.append("files", img[0])
+
+
+    await axios.post("http://localhost:1337/api/upload", imgData, {
+
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        }
+    }).then((response) => {
+
+        axios.post("http://localhost:1337/api/books", {
+            data: {
+                title,
+                author,
+                pages,
+                rating,
+                genres: genres,
+                cover: response.data[0].id,
+                users_permissions_user: userId
+            },
+
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+
+        })
+    })
+    console.log("Book uploaded");
+}
+
+let addAudiobook = async () => {
+    let title = document.querySelector("#title").value;
+    let hours = document.querySelector("#hours").value;
+    let published = document.querySelector("#published").value;
+    let rating = document.querySelector("#rating").value;
+    let genres = [];
+    let checkboxes = document.querySelectorAll(("[type='checkbox']"));
+    let userId = sessionStorage.getItem("userId");
+
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            genres.push(checkbox.value);
+        }
+
+    })
+
+
+    let img = document.querySelector("#cover").files;
+    let imgData = new FormData();
+    imgData.append("files", img[0])
+
+
+    await axios.post("http://localhost:1337/api/upload", imgData, {
+
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        }
+    }).then((response) => {
+
+        axios.post("http://localhost:1337/api/audiobooks", {
+            data: {
+                title,
+                hours,
+                published,
+                rating,
+                genres: genres,
+                cover: response.data[0].id,
+                users_permissions_user: userId
+            },
+
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+
+        })
+    })
+    console.log("audiobook uploaded");
+}
+
 
 
 

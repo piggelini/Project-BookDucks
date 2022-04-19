@@ -17,7 +17,6 @@ main {
 .header {
 
     background: rgb(18, 91, 80);
-    margin-bottom: 80px;
     font-family: Georgia,
         'Times New Roman',
         Times,
@@ -186,7 +185,6 @@ article {
 .info-container {
     display: flex;
     flex-direction: column;
-    margin: 30px;
 
     background: rgb(18, 91, 80);
     color: rgb(250, 245, 228);
@@ -268,6 +266,7 @@ article {
 
 .upload-page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
 
 }
