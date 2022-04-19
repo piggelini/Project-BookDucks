@@ -14,9 +14,12 @@ const loginForm = document.querySelector(".sign-in");
 const signUpForm = document.querySelector(".sign-up");
 const profileItemContainer = document.querySelector(".users-items");
 const profileInfo = document.querySelector(".info-container");
-const signInNavLink = document.querySelector(".sign-in-link")
+const signInNavLink = document.querySelector(".sign-in-link");
 let articleArray = [];
 const logoutButton = document.querySelector(".logout");
+const header = document.querySelector(".header");
+const headerBottom = document.querySelector(".bottom-header");
+const shelfButton = document.querySelector(".shelf-button");
 
 //Hämta böckerna från backend
 //Hämta ljudböcker från backend
@@ -221,6 +224,8 @@ userProfile.addEventListener("click", (e) => {
 
     mediaContainer.classList.add("hideHomePage");
     profilePage.classList.remove("hideProfile");
+    header.classList.add("short-header");
+    headerBottom.classList.add("hide-bottom-header");
     getUserId();
 })
 
@@ -248,6 +253,8 @@ let getUserId = () => {
 homepageNav.addEventListener("click", (e) => {
     mediaContainer.classList.remove("hideHomePage");
     profilePage.classList.add("hideProfile");
+    header.classList.remove("short-header");
+    headerBottom.classList.remove("hide-bottom-header");
 })
 
 let getUser = async (id) => {
@@ -274,6 +281,8 @@ let showProfile = async (user) => {
         <p>Email: ${user.data.email}</p>
         <p>User id: ${user.data.id}</p>
         <p>Registered: ${regDate}</p>
+
+        <button>Add books to your shelf</button>
     
 
         
@@ -291,3 +300,8 @@ logoutButton.addEventListener("click", (e) => {
     userProfile.classList.add("hide-user-link");
     logoutButton.innerText = "";
 });
+
+shelfButton.addEventListener("click", (e) => {
+
+    window.scrollTo(0, 600);
+})

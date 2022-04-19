@@ -70,26 +70,42 @@
 
     <!-- ------------HEADER------------------ -->
     <header class="header">
+        <section class="top-header">
+            <h1>BookDucks</h1>
 
-        <h1>BookDucks</h1>
+            <nav class="header-nav nav justify-content-center">
+                <a href="#" id="homepage-nav">Home</a>
+                <!-- link trigger modal -->
+                <a class="sign-in-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    Sign in
+                </a>
+                <a href="#" id="logged-in-user"></a>
+                <a class="logout" href="#"></a>
+            </nav>
+        </section>
+        <section class="bottom-header">
+            <p>At BookDucks you can easily lend and borrow books and audiobooks online. </p>
 
-        <nav class="header-nav nav justify-content-center">
-            <a href="#" id="homepage-nav">Home</a>
-            <!-- link trigger modal -->
-            <a class="sign-in-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-                Sign in
-            </a>
-            <a href="#" id="logged-in-user"></a>
-            <a class="logout" href="#"></a>
-        </nav>
+
+            <div class="image-container">
+                <a href="#" class="shelf-button">
+                    <p>Take me to the bookshelf</p><img src="images/books.jpg" alt="image of books">
+                </a>
+            </div>
+
+        </section>
+
 
     </header>
 
     <main>
-        <div class="media-container"></div>
+        <div class="media-container">
+        </div>
         <div class="profile-page">
             <section class="info-container"></section>
-            <section class="users-items"></section>
+            <section class="users-items">
+                <h3>My bookshelf</h3>
+            </section>
         </div>
     </main>
 
