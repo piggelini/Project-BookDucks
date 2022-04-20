@@ -1,0 +1,59 @@
+//Profile page styling
+
+.profile-page {
+    background: rgb(250, 245, 228);
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+
+    background: rgb(18, 91, 80);
+    color: rgb(250, 245, 228);
+    border-radius: 7px;
+    width: 50vw;
+    margin: 20px;
+
+    h2 {
+        margin: 30px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 16px;
+        margin: 10px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        font-size: 16px;
+        margin: 20px;
+        height: 30px;
+        background-color: rgb(255, 99, 99);
+        border: 0px;
+        border-radius: 3px;
+    }
+}
+
+.users-items {
+    text-align: center;
+    margin: 40px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+    div {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+    }
+
+}
+
+.profile-books {
+    height: 220px;
+    width: 180px;
+
+    img {
+        width: 100px;
+    }
+}

@@ -1,0 +1,50 @@
+//Upload page
+
+.upload-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+
+    h2 {
+        margin: 10px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    h3 {
+        margin-top: 20px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 18px;
+    }
+
+
+
+    button {
+        width: 40vw;
+        height: 30px;
+        margin: 20px;
+        background-color: rgb(255, 99, 99);
+        border: 0px;
+        border-radius: 3px;
+        margin: 20px;
+
+    }
+
+}
+
+.hide-upload-page {
+    display: none;
+}
+
+.checkboxContainer {
+
+    width: 350px;
+    min-height: 200px;
+    margin: 20px;
+
+    input {
+        margin: 10px;
+        margin-bottom: 20px;
+    }
+}
