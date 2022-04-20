@@ -35,6 +35,12 @@ async function getMedia() {
 // 
 async function renderData(books, audiobooks) {
 
+    let allBooks = document.createElement("div");
+    let shelfHeading = document.createElement("h2");
+    shelfHeading.innerText = "Bookshelf";
+    mediaContainer.appendChild(shelfHeading);
+    mediaContainer.appendChild(allBooks);
+
 
     books.data.data.forEach((book) => {
         let bookTitle = document.createElement("h4");
@@ -64,7 +70,7 @@ async function renderData(books, audiobooks) {
         })
 
 
-        mediaContainer.appendChild(article);
+        allBooks.appendChild(article);
         article.appendChild(bookCover);
         article.appendChild(bookTitle);
         article.appendChild(bookInfo);
@@ -106,7 +112,7 @@ async function renderData(books, audiobooks) {
         })
 
 
-        mediaContainer.appendChild(article);
+        allBooks.appendChild(article);
         article.appendChild(audiobookCover);
         article.appendChild(audiobookTitle);
         article.appendChild(audiobookInfo);

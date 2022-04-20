@@ -44,6 +44,7 @@
   width: 350px;
   min-height: 200px;
   margin: 20px;
+  margin-top: 5px;
 }
 
 .checkboxContainer input {

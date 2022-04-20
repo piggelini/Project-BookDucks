@@ -106,8 +106,10 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -116,11 +118,21 @@
           justify-content: center;
 }
 
-.hideHomePage {
-  display: none;
+.media-container h2 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin: 30px;
 }
 
-.hideProfile {
+.media-container div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 70vw;
+}
+
+.hideHomePage {
   display: none;
 }
 
