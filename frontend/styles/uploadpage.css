@@ -1,3 +1,32 @@
+.upload-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 400px;
+  width: 400px;
+  border-radius: 7px;
+  margin: 20px;
+  background-color: #f8b400;
+}
+
+.upload-form .image-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin: 10px;
+}
+
 .upload-page {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -16,7 +45,7 @@
 }
 
 .upload-page h2 {
-  margin: 10px;
+  margin: 20px;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -27,13 +56,15 @@
 }
 
 .upload-page button {
-  width: 40vw;
+  width: 200px;
   height: 30px;
   margin: 20px;
-  background-color: #ff6363;
   border: 0px;
   border-radius: 3px;
   margin: 20px;
+  font-weight: bold;
+  background: #125b50;
+  color: #faf5e4;
 }
 
 .hide-upload-page {
@@ -43,12 +74,23 @@
 .checkboxContainer {
   width: 350px;
   min-height: 200px;
-  margin: 20px;
+  margin: 10px;
   margin-top: 5px;
+  border: 1px solid #125b50;
 }
 
 .checkboxContainer input {
-  margin: 10px;
-  margin-bottom: 20px;
+  margin: 20px;
+}
+
+.text-fields {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 200px;
 }
 /*# sourceMappingURL=uploadpage.css.map */

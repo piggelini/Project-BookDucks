@@ -18,7 +18,7 @@ const shelfButton = document.querySelector(".shelf-button");
 
 
 
-
+//Gets all the books from the api
 async function getMedia() {
     let books = await axios.get('http://localhost:1337/api/books?populate=*', {
 
@@ -32,7 +32,7 @@ async function getMedia() {
 
 }
 
-// 
+//Shows all of the available books and audiobooks
 async function renderData(books, audiobooks) {
 
     let allBooks = document.createElement("div");
@@ -146,6 +146,8 @@ loginButton.addEventListener("click", (e) => {
     login();
 });
 
+
+
 let login = async () => {
     let { data } = await axios.post("http://localhost:1337/api/auth/local",
         {
@@ -173,7 +175,7 @@ let login = async () => {
 
 }
 
-
+//Checks in sessionstorage if loggedin
 function checkIfLoggedIn() {
     if (sessionStorage.getItem("token")) {
         userProfile.classList.remove("hide-user-link");
@@ -193,15 +195,12 @@ function checkIfLoggedIn() {
 
 
 
-
-
-
 registerButton.addEventListener("click", (e) => {
     e.preventDefault();
     register();
 })
 
-
+//Registers a new member
 let register = async () => {
 
     let response = await axios.post("http://localhost:1337/api/auth/local/register",
@@ -217,8 +216,9 @@ let register = async () => {
 
 }
 
-userProfile.addEventListener("click", (e) => {
 
+
+userProfile.addEventListener("click", (e) => {
     mediaContainer.classList.add("hideHomePage");
     profilePage.classList.remove("hideProfile");
     header.classList.add("short-header");
@@ -229,6 +229,5 @@ userProfile.addEventListener("click", (e) => {
 
 
 shelfButton.addEventListener("click", (e) => {
-
     window.scrollTo(0, 600);
 })
