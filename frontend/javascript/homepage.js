@@ -149,13 +149,14 @@ loginButton.addEventListener("click", (e) => {
 
 
 let login = async () => {
-    let { data } = await axios.post("http://localhost:1337/api/auth/local",
+    let errorMessage = document.querySelector(".error-login");
+    errorMessage.innerText = "";
+    await axios.post("http://localhost:1337/api/auth/local",
         {
             identifier: user.value,
             password: password.value
-        }).then(function (response) {
-
-            console.log(response);
+        }).then(({ data }) => {
+            errorMessage.innerText = "";
             let token = data.jwt;
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("user", data.user.username);
@@ -172,7 +173,12 @@ let login = async () => {
                     signInNavLink.classList.add("hideSignIn");
                 }
             }
+
+            document.getElementById("closeLoginModal").click();
+        }).catch(() => {
+            errorMessage.innerText = "Error: failed to login, please try again.";
         })
+
 
 
 
@@ -206,6 +212,7 @@ registerButton.addEventListener("click", (e) => {
 //Registers a new member
 let register = async () => {
     let completedReg = document.querySelector(".complete-reg");
+    completedReg.innerText = "";
 
     await axios.post("http://localhost:1337/api/auth/local/register",
         {

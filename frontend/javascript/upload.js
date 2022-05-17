@@ -2,9 +2,8 @@
 
 
 
-
-
 let addBook = async () => {
+
     let title = document.querySelector("#title").value;
     let author = document.querySelector("#author").value;
     let pages = document.querySelector("#pages").value;

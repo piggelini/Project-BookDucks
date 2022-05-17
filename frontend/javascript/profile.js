@@ -1,4 +1,3 @@
-
 const uploadPage = document.querySelector(".upload-page");
 const profilePage = document.querySelector(".profile-page")
 const profileBookContainer = document.querySelector(".users-items");
@@ -117,8 +116,15 @@ let showProfile = async (user) => {
         sessionStorage.clear();
         userProfile.classList.add("hide-user-link");
         logoutButton.innerText = "";
+
         signInNavLink.classList.remove("hideSignIn");
+        mediaContainer.classList.remove("hideHomePage");
+        profilePage.classList.add("hideProfile");
+        header.classList.remove("short-header");
+        headerBottom.classList.remove("hide-bottom-header");
+        uploadPage.classList.add("hide-upload-page");
     });
+
 
     //------ Event when click on "add books to your shelf"-button on profilepage ---------
     const uploadBookButton = document.querySelector(".add-book-button");
@@ -140,68 +146,51 @@ let showProfile = async (user) => {
 
         bookButton.addEventListener("click", (e) => {
 
-            let uploadForm = `
+            let uploadForm =
+                `
             <div class = "upload-form">
                 <h2>Upload book</h2>
-            <div class="text-fields">
-            <label for="title">Title</label>
-            <input type="text" id="title">
-
-            <label for="author">Author</label>
-            <input type="text" id="author">
-
-            <label for="pages">Pages</label>
-            <input type="number" id="pages">
-
-            <label for="rating">Rating (1-5)</label>
-            <input type="number" id="rating" min="1" max="5">
+                <div class="text-fields">
+                    <label for="title">Title</label>
+                    <input type="text" id="title">
+                    <label for="author">Author</label>
+                    <input type="text" id="author">
+                    <label for="pages">Pages</label>
+                    <input type="number" id="pages">
+                    <label for="rating">Rating (1-5)</label>
+                    <input type="number" id="rating" min="1" max="5">
+                </div>
+                <h3>Choose genre or genres</h3>
+                <div class= "checkboxContainer">
+                    <input type="checkbox" name="horror" id="horror" value = "1" />
+                    <label for="horror">Horror</label>
+                    <input type="checkbox" name="sciencef" id="sciencef" value = "2" />
+                    <label for="sciencef">Science Fiction</label>
+                    <input type="checkbox" name="comedy" id="comedy" value = "3" />
+                    <label for="comedy">Comedy</label>
+                    <br>
+                    <input type="checkbox" name="action" id="action" value = "4" />
+                    <label for="action">Action and Adventure</label>
+                    <input type="checkbox" name="fantasy" id="fantasy" value = "6" />
+                    <label for="fantasy">Fantasy</label>
+                    <br>
+                    <input type="checkbox" name="crime" id="crime" value = "5" />
+                    <label for="crime">Crime</label>
+                    <input type="checkbox" name="childrens" id="childrens" value = "8" />
+                    <label for="childrens">Childrens</label>
+                    <input type="checkbox" name="classics" id="classics" value = "9" />
+                    <label for="classics">Classics</label>
+                    <br>
+                    <input type="checkbox" name="romance" id="romance" value = "10" />
+                    <label for="romance">Romance</label>
+                    <input type="checkbox" name="mystery" id="mystery" value = "11" />
+                    <label for="mystery">Mystery</label>
+                </div>
+                <label class="image-upload" for="cover">Upload image</label>
+                <input type="file" id="cover" accept="image/*">
+                <button id="uploadButton" onClick= "addBook()" >Add book</button>
             </div>
-            <h3>Choose genre or genres</h3>
-            
-            <div class= "checkboxContainer">
-         
-            <input type="checkbox" name="horror" id="horror" value = "1" />
-            <label for="horror">Horror</label>
-            
-            <input type="checkbox" name="sciencef" id="sciencef" value = "2" />
-            <label for="sciencef">Science Fiction</label>
-            
-            <input type="checkbox" name="comedy" id="comedy" value = "3" />
-            <label for="comedy">Comedy</label>
-
-            <br>
-             
-            <input type="checkbox" name="action" id="action" value = "4" />
-            <label for="action">Action and Adventure</label>
- 
-            <input type="checkbox" name="fantasy" id="fantasy" value = "6" />
-            <label for="fantasy">Fantasy</label>
-
-            <br>
-             
-            <input type="checkbox" name="crime" id="crime" value = "5" />
-            <label for="crime">Crime</label>
-             
-            <input type="checkbox" name="childrens" id="childrens" value = "8" />
-            <label for="childrens">Childrens</label>
-             
-            <input type="checkbox" name="classics" id="classics" value = "9" />
-            <label for="classics">Classics</label>
- 
-            <br>
-
-            <input type="checkbox" name="romance" id="romance" value = "10" />
-            <label for="romance">Romance</label>
- 
-            <input type="checkbox" name="mystery" id="mystery" value = "11" />
-            <label for="mystery">Mystery</label>
-            </div>
-
-            <label class="image-upload" for="cover">Upload image</label>
-            <input type="file" id="cover" accept="image/*">
-
-            <button id="uploadButton" onClick= "addBook()" >Add book</button>
-            </div>`
+            `
 
             uploadPage.innerHTML = uploadForm;
 
@@ -211,68 +200,51 @@ let showProfile = async (user) => {
 
         audiobookButton.addEventListener("click", (e) => {
 
-            let uploadForm = `
+            let uploadForm =
+                `
             <div class = "upload-form">
-            <h2>Upload audiobook</h2>
-        <div class="text-fields">
-        <label for="title">Title</label>
-        <input type="text" id="title">
-
-        <label for="hours">Hours</label>
-        <input type="text" id="hours">
-
-        <label for="published">Published</label>
-        <input type="date" id="published">
-
-        <label for="rating">Rating (1-5)</label>
-        <input type="number" id="rating" min="1" max="5">
-        </div>
-
-        <h3>Choose genre or genres</h3>
-
-        <div class= "checkboxContainer">
-        
-            <input type="checkbox" name="horror" id="horror" value = "1" />
-            <label for="horror">Horror</label>
-            
-            <input type="checkbox" name="sciencef" id="sciencef" value = "2" />
-            <label for="sciencef">Science Fiction</label>
-            
-            <input type="checkbox" name="comedy" id="comedy" value = "3" />
-            <label for="comedy">Comedy</label>
-
-            <br>
-             
-            <input type="checkbox" name="action" id="action" value = "4" />
-            <label for="action">Action and Adventure</label>
- 
-            <input type="checkbox" name="fantasy" id="fantasy" value = "6" />
-            <label for="fantasy">Fantasy</label>
-
-            <br>
-             
-            <input type="checkbox" name="crime" id="crime" value = "5" />
-            <label for="crime">Crime</label>
-            
-            <input type="checkbox" name="childrens" id="childrens" value = "8" />
-            <label for="childrens">Childrens</label>
-             
-            <input type="checkbox" name="classics" id="classics" value = "9" />
-            <label for="classics">Classics</label>
- 
-            <br>
-             
-            <input type="checkbox" name="romance" id="romance" value = "10" />
-            <label for="romance">Romance</label>
- 
-            <input type="checkbox" name="mystery" id="mystery" value = "11" />
-            <label for="mystery">Mystery</label>
+                <h2>Upload audiobook</h2>
+                <div class="text-fields">
+                    <label for="title">Title</label>
+                    <input type="text" id="title">
+                    <label for="hours">Hours</label>
+                    <input type="text" id="hours">
+                    <label for="published">Published</label>
+                    <input type="date" id="published">
+                    <label for="rating">Rating (1-5)</label>
+                    <input type="number" id="rating" min="1" max="5">
+                </div>
+                <h3>Choose genre or genres</h3>
+                <div class= "checkboxContainer">
+                    <input type="checkbox" name="horror" id="horror" value = "1" />
+                    <label for="horror">Horror</label>
+                    <input type="checkbox" name="sciencef" id="sciencef" value = "2" />
+                    <label for="sciencef">Science Fiction</label>
+                    <input type="checkbox" name="comedy" id="comedy" value = "3" />
+                    <label for="comedy">Comedy</label>
+                    <br>
+                    <input type="checkbox" name="action" id="action" value = "4" />
+                    <label for="action">Action and Adventure</label>
+                    <input type="checkbox" name="fantasy" id="fantasy" value = "6" />
+                    <label for="fantasy">Fantasy</label>
+                    <br>
+                    <input type="checkbox" name="crime" id="crime" value = "5" />
+                    <label for="crime">Crime</label>
+                    <input type="checkbox" name="childrens" id="childrens" value = "8" />
+                    <label for="childrens">Childrens</label>
+                    <input type="checkbox" name="classics" id="classics" value = "9" />
+                    <label for="classics">Classics</label>
+                    <br>
+                    <input type="checkbox" name="romance" id="romance" value = "10" />
+                    <label for="romance">Romance</label>
+                    <input type="checkbox" name="mystery" id="mystery" value = "11" />
+                    <label for="mystery">Mystery</label>
+                </div>
+                <label class= "image-upload" for="cover">Upload image</label>
+                <input type="file" id="cover" accept="image/*">
+                <button id="uploadButton" onClick="addAudiobook()" >Add audiobook</button>
             </div>
-        <label class= "image-upload" for="cover">Upload image</label>
-        <input type="file" id="cover" accept="image/*">
-
-        <button id="uploadButton" onClick="addAudiobook()" >Add audiobook</button>
-        </div>`
+            `
             uploadPage.innerHTML = uploadForm;
 
         })
