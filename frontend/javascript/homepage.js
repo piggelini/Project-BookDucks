@@ -153,25 +153,28 @@ let login = async () => {
         {
             identifier: user.value,
             password: password.value
-        });
+        }).then(function (response) {
 
-    console.log(data.user.id);
-    let token = data.jwt;
-    sessionStorage.setItem("token", token);
-    sessionStorage.setItem("user", data.user.username);
-    sessionStorage.setItem("userId", data.user.id);
+            console.log(response);
+            let token = data.jwt;
+            sessionStorage.setItem("token", token);
+            sessionStorage.setItem("user", data.user.username);
+            sessionStorage.setItem("userId", data.user.id);
 
-    userProfile.innerText = user.value;
+            userProfile.innerText = user.value;
 
-    if (sessionStorage.getItem("token")) {
-        userProfile.classList.remove("hide-user-link");
-        userProfile.innerText = sessionStorage.getItem("user");
-        logoutButton.innerText = "Logout";
+            if (sessionStorage.getItem("token")) {
+                userProfile.classList.remove("hide-user-link");
+                userProfile.innerText = sessionStorage.getItem("user");
+                logoutButton.innerText = "Logout";
 
-        if (!signInNavLink.classList.contains("hideSignIn")) {
-            signInNavLink.classList.add("hideSignIn");
-        }
-    }
+                if (!signInNavLink.classList.contains("hideSignIn")) {
+                    signInNavLink.classList.add("hideSignIn");
+                }
+            }
+        })
+
+
 
 }
 
@@ -202,17 +205,25 @@ registerButton.addEventListener("click", (e) => {
 
 //Registers a new member
 let register = async () => {
+    let completedReg = document.querySelector(".complete-reg");
 
-    let response = await axios.post("http://localhost:1337/api/auth/local/register",
+    await axios.post("http://localhost:1337/api/auth/local/register",
         {
             username: registerUser.value,
             email: registerEmail.value,
             password: registerPassword.value
-        });
-    console.log("Registered!", response);
+        })
+        .then(function (response) {
+            console.log("Registered!", response);
 
-    let completedReg = document.querySelector(".complete-reg");
-    completedReg.innerText = "Welcome " + registerUser.value + ". You can now sign in!";
+            completedReg.innerText = "Welcome " + registerUser.value + ". You can now sign in!";
+
+        })
+        .catch(function (error) {
+            console.log(error);
+            completedReg.innerText = "Error: please fill in all fields correctly";
+        })
+
 
 }
 

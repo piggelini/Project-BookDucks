@@ -73,14 +73,14 @@
 
 .checkboxContainer {
   width: 350px;
-  min-height: 200px;
+  min-height: 100px;
   margin: 10px;
   margin-top: 5px;
   border: 1px solid #125b50;
 }
 
 .checkboxContainer input {
-  margin: 20px;
+  margin: 5px;
 }
 
 .text-fields {
